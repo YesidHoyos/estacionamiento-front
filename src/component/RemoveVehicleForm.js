@@ -10,17 +10,20 @@ class RemoveVehicleForm extends Component{
     removeVehicle(e) {
         e.preventDefault();
         const placa = this.licenseRef.current.value;
-        console.log(placa);        
+        this.props.removeVehicle(placa);      
     }
     render() {
         return (
-            <form onSubmit={this.removeVehicle}>
-                <h3>Sacar vehiculo del parqueadero</h3>
-                <label>
-                    Placa<input type="text" className="input" id="placa" ref={this.licenseRef} />
-                </label>
-                <button type="submit">Aceptar</button>
-            </form>
+            <div className="container">
+                <form ref={this.formRef} onSubmit={this.removeVehicle} className="col s8">
+                    <h5 className="center">Sacar vehiculo</h5>
+                    <div className="input-field col s12">
+                        <input type="text" className="validate" id="placaRemove" ref={this.licenseRef} required/>
+                        <label htmlFor="placaRemove">Placa</label>
+                    </div>
+                    <button type="submit" className="waves-effect btn-flat right">Aceptar</button>
+                </form>
+            </div>
         )
     }
 }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-
-import M from "materialize-css";
+import Materialize from "materialize-css";
 
 class RegisterVehicleForm extends Component {
 
@@ -10,6 +9,11 @@ class RegisterVehicleForm extends Component {
     this.licenseRef = React.createRef();
     this.engineRef = React.createRef();
     this.registerVehicle = this.registerVehicle.bind(this);
+  }
+
+  componentDidMount() {
+    let select = document.querySelectorAll('select')
+    Materialize.FormSelect.init(select)
   }
 
   registerVehicle(e) {
@@ -24,42 +28,28 @@ class RegisterVehicleForm extends Component {
 
   }
 
-  componentDidMount() {
-    let select = document.querySelectorAll('select')
-    let modal = document.querySelectorAll('.modal')
-    const options = {
-      dismissible: false
-    }
-    M.Modal.init(modal, options)
-    M.FormSelect.init(select)
-  } 
   render() {
     return (
-      <div id="ingresar" className="modal">
-        <div className="modal-content">
-          <form onSubmit={this.registerVehicle}>
-            <h4>Ingresar vehiculo al parqueadero</h4>
-            <div className="tipo">
-              <label>Tipo de vehiculo</label>
-              <select name="tipo" ref={this.typeRef}>
-                <option value="1">Carro</option>
-                <option value="2">Moto</option>
-              </select>
-            </div>
+      <div className="container">
+        <form onSubmit={this.registerVehicle} className="col s8">
+          <h5 className="center">Ingresar vehiculo</h5>
+          <div className="input-field col s12">
+            <select name="tipo" ref={this.typeRef}>
+              <option value="1">Carro</option>
+              <option value="2">Moto</option>
+            </select>
+          </div>
+          <div className="input-field col s12">
+            <input type="text" className="validate" id="placa" ref={this.licenseRef} required/>
+            <label htmlFor="placa">Placa</label>
+          </div>
 
-            <label>
-              Placa<input type="text" className="input" id="placa" ref={this.licenseRef} />
-            </label>
-            <label>
-              Cilindraje<input type="number" className="input" id="cilindraje" ref={this.engineRef} />
-            </label>
-
-            <div className="modal-footer">
-              <a href="#!" className="modal-close waves-effect btn-flat">Cancelar</a>
-              <button type="submit" className="modal-close waves-effect btn-flat">Aceptar</button>
-            </div>
-          </form>
-        </div>
+          <div className="input-field col s12">
+            <input type="number" className="validate" id="cilindraje" ref={this.engineRef} required/>
+            <label htmlFor="cilindraje">Cilindraje</label>
+          </div>
+          <button type="submit" className="waves-effect btn-flat right">Aceptar</button>
+        </form>
       </div>
     )
   }

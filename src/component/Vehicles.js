@@ -27,8 +27,8 @@ class Vehicles extends Component{
     render(){
         return(
             <div className="container">
-                <h3 className="center">Vehiculos en el parqueadero</h3>
-                <table className="highlight">
+                <h5 className="center">Vehiculos en el parqueadero</h5>
+                <table className="striped responsive-table">
                     <thead>
                          <tr> 
                               <th>Tipo de vehiculo</th>

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 import "materialize-css/dist/css/materialize.min.css";
-
+import '../css/App.css'
 import Header from './Header';
 import RegisterVehicleForm from './RegisterVehicleForm';
 import RemoveVehicleForm from './RemoveVehicleForm';
@@ -48,10 +49,16 @@ class App extends Component {
 
           this.setState({
             vehicles: result
-          })
+          })          
         }
       })
-      .catch((error) => console.log(error))
+      .catch((error) => (
+        Swal.fire({
+          type: 'error',
+          title: 'Error',
+          text: `${error.response.data.message}`
+        })
+      ))
   }
 
   registerVehicle = (vehicle) => {
@@ -65,7 +72,11 @@ class App extends Component {
       })
       .then(response => {
         if (response.status === 200) {
-
+          Swal.fire(
+            'Vehiculo ingresado!',
+            'Se ingresó el vehiculo al parqueadero correctamente',
+            'success'
+          );
           const newVehicle = response.data;
           
           newVehicle.tipo === 1 ? newVehicle.tipo = "Carro" 
@@ -74,20 +85,30 @@ class App extends Component {
           this.setState(prevState => ({
             vehicles: [...prevState.vehicles, newVehicle]
           }))
-        } else {
-          console.log('mal');
         }
       })
-      .catch((error) => console.log(error))
+      .catch((error) => (
+        Swal.fire({
+          type: 'error',
+          title: 'Error',
+          text: `${error.response.data.message}`
+        })
+      ))
   }
 
   render() {
     return (
-      <div>
+      <div className="row">
         <Header title="Estacionamiento" />
-        <RegisterVehicleForm registerVehicle={this.registerVehicle} />
-        {/* <RemoveVehicleForm /> */}
-        <Vehicles vehicles={this.state.vehicles} removeVehicle={this.removeVehicle} />
+        <div className="col s4">
+          <div className="fix">
+            <RegisterVehicleForm registerVehicle={this.registerVehicle} />
+            <RemoveVehicleForm removeVehicle={this.removeVehicle}/>
+            </div>
+        </div>
+        <div className="col s8">
+          <Vehicles vehicles={this.state.vehicles} removeVehicle={this.removeVehicle} />
+        </div>
       </div>
     );
   }
