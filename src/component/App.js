@@ -14,12 +14,30 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      vehicles: []
+      vehicles: [],
+      TRM: "" 
     }
   }
 
   componentDidMount() {
     this.getVehicles();
+    this.getTRM();
+  }
+
+  getTRM(){
+    const date = new Date();
+    const day = date.getDay();
+    const month = date.getMonth();
+    const year = date.getFullYear();
+
+    const dateTRM = `${year}-${month}-${day}T00:00:00.000`
+    
+    axios.get(`https://www.datos.gov.co/resource/32sa-8pi3.json?vigenciahasta=${dateTRM}`)
+        .then(response => {          
+          this.setState({
+            TRM: response.data[0].valor
+         })         
+       })
   }
 
   getVehicles = () => {
@@ -99,7 +117,7 @@ class App extends Component {
   render() {
     return (
       <div className="row">
-        <Header title="Estacionamiento" />
+        <Header title="Estacionamiento" trm={this.state.TRM}/>
         <div className="col s4">
           <div className="fix">
             <RegisterVehicleForm registerVehicle={this.registerVehicle} />
