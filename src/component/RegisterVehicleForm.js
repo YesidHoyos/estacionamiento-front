@@ -18,7 +18,7 @@ class RegisterVehicleForm extends Component{
             cilindraje: this.engineRef.current.value
         }
 
-        console.log(vehicle);
+        this.props.registerVehicle(vehicle);
         
     }
     render(){
