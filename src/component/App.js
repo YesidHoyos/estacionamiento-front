@@ -45,6 +45,7 @@ class App extends Component {
           let result = vehicles.filter(vehicle => (      
             vehicle.placa !== license
           ));          
+
           this.setState({
             vehicles: result
           })

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 class Vehicle extends Component {
     render() {
-
         const { tipo, placa, fechaIngreso } = this.props.data;
         return (
             <tr>
