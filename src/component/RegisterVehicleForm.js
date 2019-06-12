@@ -1,50 +1,68 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-class RegisterVehicleForm extends Component{
+import M from "materialize-css";
 
-    constructor(props) {
-        super(props);
-        this.typeRef = React.createRef();
-        this.licenseRef = React.createRef();
-        this.engineRef = React.createRef();
-        this.registerVehicle = this.registerVehicle.bind(this);
+class RegisterVehicleForm extends Component {
+
+  constructor(props) {
+    super(props);
+    this.typeRef = React.createRef();
+    this.licenseRef = React.createRef();
+    this.engineRef = React.createRef();
+    this.registerVehicle = this.registerVehicle.bind(this);
+  }
+
+  registerVehicle(e) {
+    e.preventDefault();
+    const vehicle = {
+      placa: this.licenseRef.current.value,
+      tipo: parseInt(this.typeRef.current.value),      
+      cilindraje: parseInt(this.engineRef.current.value)
     }
 
-    registerVehicle(e){
-        e.preventDefault();
-        const vehicle = {
-            tipo: this.typeRef.current.value,
-            placa: this.licenseRef.current.value,
-            cilindraje: this.engineRef.current.value
-        }
+    this.props.registerVehicle(vehicle);
 
-        console.log(vehicle);
-        
+  }
+
+  componentDidMount() {
+    let select = document.querySelectorAll('select')
+    let modal = document.querySelectorAll('.modal')
+    const options = {
+      dismissible: false
     }
-    render(){
-        return (
-            <form onSubmit={this.registerVehicle}>
-                <h3>Ingresar vehiculo al parqueadero</h3>
+    M.Modal.init(modal, options)
+    M.FormSelect.init(select)
+  } 
+  render() {
+    return (
+      <div id="ingresar" className="modal">
+        <div className="modal-content">
+          <form onSubmit={this.registerVehicle}>
+            <h4>Ingresar vehiculo al parqueadero</h4>
+            <div className="tipo">
+              <label>Tipo de vehiculo</label>
+              <select name="tipo" ref={this.typeRef}>
+                <option value="1">Carro</option>
+                <option value="2">Moto</option>
+              </select>
+            </div>
 
-                <div className="tipo">
-                    <label>Tipo de vehiculo</label>
-                    <select name="tipo" ref={this.typeRef}>
-                        <option value="1">Carro</option>
-                        <option value="2">Moto</option>
-                    </select>
-                </div>
+            <label>
+              Placa<input type="text" className="input" id="placa" ref={this.licenseRef} />
+            </label>
+            <label>
+              Cilindraje<input type="number" className="input" id="cilindraje" ref={this.engineRef} />
+            </label>
 
-                <label>
-                    Placa<input type="text" className="input" id="placa" ref={this.licenseRef} />
-                </label>
-                <label>
-                    Cilindraje<input type="number" className="input" id="cilindraje" ref={this.engineRef} />
-                </label>
-
-                <button type="submit">Aceptar</button>
-            </form>
-        )
-    }
+            <div className="modal-footer">
+              <a href="#!" className="modal-close waves-effect btn-flat">Cancelar</a>
+              <button type="submit" className="modal-close waves-effect btn-flat">Aceptar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    )
+  }
 }
 
 export default RegisterVehicleForm;
