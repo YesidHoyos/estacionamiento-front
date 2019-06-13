@@ -26,15 +26,16 @@ class App extends Component {
 
   getTRM(){
     const date = new Date();
-    const day = date.getDay();
-    const month = date.getMonth();
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
     const year = date.getFullYear();
 
     const dateTRM = `${year}-${month}-${day}T00:00:00.000`
     
     axios.get(`https://www.datos.gov.co/resource/32sa-8pi3.json?vigenciahasta=${dateTRM}`)
-        .then(response => {          
-          this.setState({
+        .then(response => {   
+          console.log(response);       
+          this.setState({           
             TRM: response.data[0].valor
          })         
        })
@@ -60,6 +61,7 @@ class App extends Component {
     axios.post(`http://localhost:8080/vehiculo/sacar?placa=${license}`)
       .then(response => {
         if (response.status === 200) {
+          Swal.fire(`Total a pagar: ${response.data.totalAPagar}`)
           const vehicles = [...this.state.vehicles];
           let result = vehicles.filter(vehicle => (      
             vehicle.placa !== license
