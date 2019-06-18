@@ -58,7 +58,7 @@ class App extends Component {
   }
 
   removeVehicle = (license) => {
-    axios.post(`http://localhost:8080/vehiculo/sacar?placa=${license}`)
+    axios.put(`http://localhost:8080/parqueadero/vehiculos/${license}`)
       .then(response => {
         if (response.status === 200) {
           Swal.fire(`Total a pagar: ${response.data.totalAPagar}`)
@@ -84,7 +84,7 @@ class App extends Component {
   registerVehicle = (vehicle) => {
     const { tipo, placa, cilindraje } = vehicle;
 
-    axios.post(`http://localhost:8080/vehiculo/ingresar`,
+    axios.post(`http://localhost:8080/parqueadero/vehiculos`,
       {
         tipo: tipo,
         placa: placa,
