@@ -76,7 +76,7 @@ class App extends Component {
         Swal.fire({
           type: 'error',
           title: 'Error',
-          text: `${error.response.data.message}`
+          text: `${error.response.data}`
         })
       ))
   }
@@ -111,8 +111,8 @@ class App extends Component {
         Swal.fire({
           type: 'error',
           title: 'Error',
-          text: `${error.response.data.message}`
-        })
+          text: `${error.response.data}`
+        }) 
       ))
   }
 
